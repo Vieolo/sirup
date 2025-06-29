@@ -1,10 +1,8 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-
-*/
 package main
 
-import "github.com/vieolo/sirub/cmd"
+import (
+	"github.com/vieolo/sirup/cmd"
+)
 
 func main() {
 	cmd.Execute()
