@@ -25,7 +25,7 @@ func ReadConfig() (WorkspaceConfig, error) {
 		return WorkspaceConfig{}, err
 	}
 
-	config := WorkspaceConfig{
+	config := &WorkspaceConfig{
 		ProjectsPath: "./projects",
 	}
 	err = yaml.Unmarshal(buf, config)
@@ -33,5 +33,5 @@ func ReadConfig() (WorkspaceConfig, error) {
 		return WorkspaceConfig{}, fmt.Errorf("in file %q: %w", "sirup.workspace.yaml", err)
 	}
 
-	return config, err
+	return *config, err
 }
