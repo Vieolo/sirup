@@ -26,7 +26,7 @@ func ReadConfig() (WorkspaceConfig, error) {
 	}
 
 	config := &WorkspaceConfig{
-		ProjectsPath: "./projects",
+		ProjectsPath: ".",
 	}
 	err = yaml.Unmarshal(buf, config)
 	if err != nil {
