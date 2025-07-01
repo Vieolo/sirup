@@ -37,6 +37,14 @@ func ReadConfig() (WorkspaceConfig, error) {
 }
 
 func WriteConfig(con WorkspaceConfig) error {
+	if len(con.Repos) == 0 {
+		con.Repos = append(con.Repos, RepoInConfig{
+			Name:     "sample-repo",
+			URL:      "https://samplegit.com/sample-repo",
+			RepoPath: "allSamples/sample-repo",
+		})
+	}
+
 	marshaledBytes, marshalErr := yaml.Marshal(con)
 	if marshalErr != nil {
 		return marshalErr
