@@ -1,4 +1,4 @@
-# sirup
+# sirup v0.1.1
 Multi-repo workspace manager -- The closest thing to a monorepo without being a monorepo
 
 ## Install
