@@ -27,3 +27,8 @@ repos: # The array of repos. Should have at least one repo -- Required
       url: "https://github.com/to/your/repo_2"
       path: "cicd/repo_2"
 ```
+
+## Commands
+
+- `init` -> Initiates a new workspace. Will prompt you for the necessary fields
+- `fetch` -> Clones the repos listed in workspace yaml
