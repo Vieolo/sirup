@@ -15,7 +15,7 @@ type RepoInConfig struct {
 
 type WorkspaceConfig struct {
 	Name         string         `yaml:"name"`
-	ProjectsPath string         `yaml:"projects_path"`
+	ProjectsPath string         `yaml:"projects_path,omitempty"`
 	Repos        []RepoInConfig `yaml:"repos"`
 }
 
@@ -34,4 +34,13 @@ func ReadConfig() (WorkspaceConfig, error) {
 	}
 
 	return *config, err
+}
+
+func WriteConfig(con WorkspaceConfig) error {
+	marshaledBytes, marshalErr := yaml.Marshal(con)
+	if marshalErr != nil {
+		return marshalErr
+	}
+
+	return os.WriteFile("sirup.workspace.yaml", marshaledBytes, 0777)
 }
