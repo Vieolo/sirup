@@ -8,9 +8,10 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
-	fm "github.com/vieolo/file-management"
+	"github.com/vieolo/filange"
 	"github.com/vieolo/sirup/utils"
-	tu "github.com/vieolo/terminal-utils"
+	"github.com/vieolo/termange"
+	"github.com/vieolo/termange/tui"
 )
 
 // initCmd represents the init command
@@ -24,20 +25,20 @@ var initCmd = &cobra.Command{
 		fmt.Println("- Looking for an existing sirup.workspace.yaml")
 		con, conErr := utils.ReadConfig()
 		if conErr != nil {
-			tu.PrintColorln("- No valid sirup.workspace.yaml was found! generating a new one...", tu.Yellow)
-			con.Name = tu.TextInput("What is the name of the workspace?")
+			termange.PrintColorln("- No valid sirup.workspace.yaml was found! generating a new one...", termange.Yellow)
+			con.Name = tui.TextInput(tui.TextInputOptions{Prompt: "What is the name of the workspace?"})
 		}
 
 		conWriteErr := utils.WriteConfig(con)
 		if conWriteErr != nil {
-			tu.PrintError("- Error while writing the sirup.workspace.yaml file")
-			tu.PrintError(conWriteErr.Error())
+			termange.PrintError("- Error while writing the sirup.workspace.yaml file")
+			termange.PrintError(conWriteErr.Error())
 			return
 		} else {
-			tu.PrintSuccess("- Workspace config is generated")
+			termange.PrintSuccess("- Workspace config is generated")
 		}
 
-		if !fm.FileExists(".gitignore") {
+		if !filange.FileExists(".gitignore") {
 			fmt.Println("- Creating the default .gitignore file...")
 			gitIgnore := `
 # Ignore everything, including your repos
@@ -52,15 +53,15 @@ var initCmd = &cobra.Command{
 `
 			gitIgnoreWriteErr := os.WriteFile(".gitignore", []byte(gitIgnore), 0777)
 			if gitIgnoreWriteErr != nil {
-				tu.PrintError("- Error while writing the .gitignore file")
-				tu.PrintError(gitIgnoreWriteErr.Error())
+				termange.PrintError("- Error while writing the .gitignore file")
+				termange.PrintError(gitIgnoreWriteErr.Error())
 				return
 			} else {
-				tu.PrintSuccess("- Default .gitignore is generated")
+				termange.PrintSuccess("- Default .gitignore is generated")
 			}
 		}
 
-		tu.PrintSuccess("- Basic workspace is initiated!")
+		termange.PrintSuccess("- Basic workspace is initiated!")
 		fmt.Println("\n\nPossibel next steps:")
 		fmt.Println("\tTurn this project into a git repo")
 		fmt.Println("\tAdd your repos to the sirup.workspace.yaml file")
