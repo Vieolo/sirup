@@ -1,4 +1,4 @@
-# sirup v0.1.1
+# sirup
 Multi-repo workspace manager -- The closest thing to a monorepo without being a monorepo
 
 ## Install
@@ -32,3 +32,4 @@ repos: # The array of repos. Should have at least one repo -- Required
 
 - `init` -> Initiates a new workspace. Will prompt you for the necessary fields
 - `fetch` -> Clones the repos listed in workspace yaml
+- `list` -> Lists the repos listed in workspace yaml
