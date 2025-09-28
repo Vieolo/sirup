@@ -1,11 +1,11 @@
 module github.com/vieolo/sirup
 
-go 1.24.3
+go 1.25.1
 
 require (
 	github.com/spf13/cobra v1.9.1
-	github.com/vieolo/file-management v0.1.2
-	github.com/vieolo/terminal-utils v0.2.2
+	github.com/vieolo/filange v0.2.0
+	github.com/vieolo/termange v0.4.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
