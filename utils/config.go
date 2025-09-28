@@ -8,9 +8,11 @@ import (
 )
 
 type RepoInConfig struct {
-	Name     string `yaml:"name"`
-	URL      string `yaml:"url"`
-	RepoPath string `yaml:"path"`
+	Name     string   `yaml:"name"`
+	URL      string   `yaml:"url"`
+	RepoPath string   `yaml:"path"`
+	RepoType string   `yaml:"type"`
+	Tags     []string `yaml:"tags"`
 }
 
 type WorkspaceConfig struct {
@@ -42,6 +44,8 @@ func WriteConfig(con WorkspaceConfig) error {
 			Name:     "sample-repo",
 			URL:      "https://samplegit.com/sample-repo",
 			RepoPath: "allSamples/sample-repo",
+			RepoType: "typescript",
+			Tags:     []string{"frontend", "react", "vite"},
 		})
 	}
 
