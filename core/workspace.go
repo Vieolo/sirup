@@ -1,4 +1,4 @@
-package utils
+package core
 
 import (
 	"fmt"
@@ -8,21 +8,16 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type RepoInConfig struct {
-	Name     string   `yaml:"name"`
-	URL      string   `yaml:"url"`
-	RepoPath string   `yaml:"path"`
-	RepoType string   `yaml:"type"`
-	Tags     []string `yaml:"tags"`
-}
-
 type WorkspaceConfig struct {
-	Name         string         `yaml:"name"`
-	ProjectsPath string         `yaml:"projects_path,omitempty"`
-	Repos        []RepoInConfig `yaml:"repos"`
+	// The name of the workspace
+	Name         string `yaml:"name"`
+	ProjectsPath string `yaml:"projects_path,omitempty"`
+	// The list of the repos of the workspace
+	Repos []Repo `yaml:"repos"`
 }
 
-func ReadConfig() (WorkspaceConfig, error) {
+// Finds and parses the nearest `sirup.workspace.yaml` file
+func ReadWorkspaceConfig() (WorkspaceConfig, error) {
 	configPath, pathErr := findWorkspaceFile()
 	if pathErr != nil {
 		return WorkspaceConfig{}, pathErr
@@ -43,9 +38,9 @@ func ReadConfig() (WorkspaceConfig, error) {
 	return *config, err
 }
 
-func WriteConfig(con WorkspaceConfig) error {
+func WriteWorkspaceConfig(con WorkspaceConfig) error {
 	if len(con.Repos) == 0 {
-		con.Repos = append(con.Repos, RepoInConfig{
+		con.Repos = append(con.Repos, Repo{
 			Name:     "sample-repo",
 			URL:      "https://samplegit.com/sample-repo",
 			RepoPath: "allSamples/sample-repo",
