@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
-	"github.com/vieolo/filange"
 	"github.com/vieolo/sirup/core"
 	"github.com/vieolo/termange"
 )
@@ -28,16 +27,12 @@ var fetchCmd = &cobra.Command{
 
 		for _, singleRepo := range config.Repos {
 			termange.PrintColorln(fmt.Sprintf("- Cloning %v...", singleRepo.Name), termange.Yellow)
-			filange.CreateDirIfNotExists(singleRepo.RepoPath, 0777)
-			termange.RunCommand(termange.CommandConfig{
-				Command: "git",
-				Args: []string{
-					"clone",
-					singleRepo.URL,
-					singleRepo.RepoPath,
-				},
-			})
-			termange.PrintSuccess(fmt.Sprintf("- Successfully cloned %v", singleRepo.Name))
+			cloneErr := singleRepo.CloneFromGit()
+			if cloneErr == nil {
+				termange.PrintSuccess(fmt.Sprintf("- Successfully cloned %v", singleRepo.Name))
+			} else {
+				termange.PrintError(fmt.Sprintf("- Failed to clone %v", singleRepo.Name))
+			}
 		}
 	},
 }

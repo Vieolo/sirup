@@ -8,25 +8,12 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type RepoInConfig struct {
-	// Name of the repo
-	Name string `yaml:"name"`
-	// The URL of repo, including the https prefix
-	URL string `yaml:"url"`
-	// The relative path of the repo, in relation to the workspace root. e.g. frontend/my-project
-	RepoPath string `yaml:"path"`
-	// The type of the repo. e.g. `go`, `flutter`, etc.
-	RepoType string `yaml:"type"`
-	// Optional tags of the repo. Each repo can have many tags
-	Tags []string `yaml:"tags"`
-}
-
 type WorkspaceConfig struct {
 	// The name of the workspace
 	Name         string `yaml:"name"`
 	ProjectsPath string `yaml:"projects_path,omitempty"`
 	// The list of the repos of the workspace
-	Repos []RepoInConfig `yaml:"repos"`
+	Repos []Repo `yaml:"repos"`
 }
 
 // Finds and parses the nearest `sirup.workspace.yaml` file
@@ -53,7 +40,7 @@ func ReadWorkspaceConfig() (WorkspaceConfig, error) {
 
 func WriteWorkspaceConfig(con WorkspaceConfig) error {
 	if len(con.Repos) == 0 {
-		con.Repos = append(con.Repos, RepoInConfig{
+		con.Repos = append(con.Repos, Repo{
 			Name:     "sample-repo",
 			URL:      "https://samplegit.com/sample-repo",
 			RepoPath: "allSamples/sample-repo",
