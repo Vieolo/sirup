@@ -9,7 +9,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/vieolo/filange"
-	"github.com/vieolo/sirup/utils"
+	"github.com/vieolo/sirup/core"
 	"github.com/vieolo/termange"
 	"github.com/vieolo/termange/tui"
 )
@@ -23,13 +23,13 @@ var initCmd = &cobra.Command{
 		fmt.Println("- Initiating a new workspace...")
 
 		fmt.Println("- Looking for an existing sirup.workspace.yaml")
-		con, conErr := utils.ReadConfig()
+		con, conErr := core.ReadWorkspaceConfig()
 		if conErr != nil {
 			termange.PrintColorln("- No valid sirup.workspace.yaml was found! generating a new one...", termange.Yellow)
 			con.Name = tui.TextInput(tui.TextInputOptions{Prompt: "What is the name of the workspace?"})
 		}
 
-		conWriteErr := utils.WriteConfig(con)
+		conWriteErr := core.WriteWorkspaceConfig(con)
 		if conWriteErr != nil {
 			termange.PrintError("- Error while writing the sirup.workspace.yaml file")
 			termange.PrintError(conWriteErr.Error())

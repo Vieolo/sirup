@@ -9,7 +9,7 @@ import (
 	"sort"
 
 	"github.com/spf13/cobra"
-	"github.com/vieolo/sirup/utils"
+	"github.com/vieolo/sirup/core"
 	"github.com/vieolo/termange"
 )
 
@@ -21,7 +21,7 @@ var listCmd = &cobra.Command{
 	
 The sort of the repos can be changed and they can be filtered by group or tags`,
 	Run: func(cmd *cobra.Command, args []string) {
-		config, configErr := utils.ReadConfig()
+		config, configErr := core.ReadWorkspaceConfig()
 		if configErr != nil {
 			termange.PrintError(fmt.Sprintf("There was an error while reading the workspace yaml: %s", configErr.Error()))
 			os.Exit(1)
