@@ -9,19 +9,27 @@ import (
 )
 
 type RepoInConfig struct {
-	Name     string   `yaml:"name"`
-	URL      string   `yaml:"url"`
-	RepoPath string   `yaml:"path"`
-	RepoType string   `yaml:"type"`
-	Tags     []string `yaml:"tags"`
+	// Name of the repo
+	Name string `yaml:"name"`
+	// The URL of repo, including the https prefix
+	URL string `yaml:"url"`
+	// The relative path of the repo, in relation to the workspace root. e.g. frontend/my-project
+	RepoPath string `yaml:"path"`
+	// The type of the repo. e.g. `go`, `flutter`, etc.
+	RepoType string `yaml:"type"`
+	// Optional tags of the repo. Each repo can have many tags
+	Tags []string `yaml:"tags"`
 }
 
 type WorkspaceConfig struct {
-	Name         string         `yaml:"name"`
-	ProjectsPath string         `yaml:"projects_path,omitempty"`
-	Repos        []RepoInConfig `yaml:"repos"`
+	// The name of the workspace
+	Name         string `yaml:"name"`
+	ProjectsPath string `yaml:"projects_path,omitempty"`
+	// The list of the repos of the workspace
+	Repos []RepoInConfig `yaml:"repos"`
 }
 
+// Finds and parses the nearest `sirup.workspace.yaml` file
 func ReadWorkspaceConfig() (WorkspaceConfig, error) {
 	configPath, pathErr := findWorkspaceFile()
 	if pathErr != nil {
