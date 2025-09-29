@@ -1,6 +1,8 @@
 package core
 
 import (
+	"slices"
+
 	"github.com/vieolo/filange"
 	"github.com/vieolo/termange"
 )
@@ -30,4 +32,30 @@ func (r Repo) CloneFromGit() error {
 		},
 	})
 	return err
+}
+
+// Filters the repos by the given type
+func (c WorkspaceConfig) FilterReposByType(repoType string) []Repo {
+	filtered := []Repo{}
+
+	for _, r := range c.Repos {
+		if r.RepoType == repoType {
+			filtered = append(filtered, r)
+		}
+	}
+
+	return filtered
+}
+
+// Filters the repos by the given tag
+func (c WorkspaceConfig) FilterReposByTag(tag string) []Repo {
+	filtered := []Repo{}
+
+	for _, r := range c.Repos {
+		if slices.Contains(r.Tags, tag) {
+			filtered = append(filtered, r)
+		}
+	}
+
+	return filtered
 }
