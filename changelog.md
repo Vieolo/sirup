@@ -1,5 +1,10 @@
 # Change Log
 
+## v0.1.3 (2025-09-29)
+- Adjusted the project for the `core` module to be usable as a dependency
+- Moved the clone functionality to the `Repo` struct
+- Added basic filter functions to `WorkspaceConfig` for filtering repos
+
 ## v0.1.2 (2025-09-29)
 - Added the `list` command
 
