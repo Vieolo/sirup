@@ -1,4 +1,4 @@
-package utils
+package core
 
 import (
 	"fmt"
@@ -22,7 +22,7 @@ type WorkspaceConfig struct {
 	Repos        []RepoInConfig `yaml:"repos"`
 }
 
-func ReadConfig() (WorkspaceConfig, error) {
+func ReadWorkspaceConfig() (WorkspaceConfig, error) {
 	configPath, pathErr := findWorkspaceFile()
 	if pathErr != nil {
 		return WorkspaceConfig{}, pathErr
@@ -43,7 +43,7 @@ func ReadConfig() (WorkspaceConfig, error) {
 	return *config, err
 }
 
-func WriteConfig(con WorkspaceConfig) error {
+func WriteWorkspaceConfig(con WorkspaceConfig) error {
 	if len(con.Repos) == 0 {
 		con.Repos = append(con.Repos, RepoInConfig{
 			Name:     "sample-repo",

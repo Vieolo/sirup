@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/vieolo/filange"
-	"github.com/vieolo/sirup/utils"
+	"github.com/vieolo/sirup/core"
 	"github.com/vieolo/termange"
 )
 
@@ -15,7 +15,7 @@ var fetchCmd = &cobra.Command{
 	Short: "Fetches the listed repos",
 	Long:  `Fetches the listed repos`,
 	Run: func(cmd *cobra.Command, args []string) {
-		config, configErr := utils.ReadConfig()
+		config, configErr := core.ReadWorkspaceConfig()
 		if configErr != nil {
 			termange.PrintError(configErr.Error())
 			return
