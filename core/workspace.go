@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"os"
+	"path"
 	"path/filepath"
 
 	"gopkg.in/yaml.v3"
@@ -13,7 +14,8 @@ type WorkspaceConfig struct {
 	Name         string `yaml:"name"`
 	ProjectsPath string `yaml:"projects_path,omitempty"`
 	// The list of the repos of the workspace
-	Repos []Repo `yaml:"repos"`
+	Repos        []Repo `yaml:"repos"`
+	AbsolutePath string
 }
 
 // Finds and parses the nearest `sirup.workspace.yaml` file
@@ -33,6 +35,15 @@ func ReadWorkspaceConfig() (WorkspaceConfig, error) {
 	err = yaml.Unmarshal(buf, config)
 	if err != nil {
 		return WorkspaceConfig{}, fmt.Errorf("in file %q: %w", "sirup.workspace.yaml", err)
+	}
+
+	configFolder, _ := path.Split(configPath)
+	config.AbsolutePath = configFolder
+
+	for i := 0; i < len(config.Repos); i++ {
+		repo := config.Repos[i]
+		repo.AbsolutePath = path.Join(configFolder, config.ProjectsPath, repo.RepoPath)
+		config.Repos[i] = repo
 	}
 
 	return *config, err

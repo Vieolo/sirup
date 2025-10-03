@@ -18,6 +18,8 @@ type Repo struct {
 	RepoType string `yaml:"type"`
 	// Optional tags of the repo. Each repo can have many tags
 	Tags []string `yaml:"tags"`
+	// The absolute path of repo, calcuated while parsing the workspace yaml file
+	AbsolutePath string
 }
 
 // Clones the repo from its git URL
