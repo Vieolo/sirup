@@ -1,5 +1,8 @@
 # Change Log
 
+## v0.1.4 (2025-10-03)
+- Added absolute path to both `WorkspaceConfig` and `Repo` structs
+
 ## v0.1.3 (2025-09-29)
 - Adjusted the project for the `core` module to be usable as a dependency
 - Moved the clone functionality to the `Repo` struct
