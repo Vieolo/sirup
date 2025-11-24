@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.1.5 (2025-11-24)
+- Improved the listing of the repos
+- Added support for filtering repos by tags
+
 ## v0.1.4 (2025-10-03)
 - Added absolute path to both `WorkspaceConfig` and `Repo` structs
 
