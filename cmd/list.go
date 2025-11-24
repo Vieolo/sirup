@@ -6,6 +6,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"slices"
 	"sort"
 
 	"github.com/spf13/cobra"
@@ -27,14 +28,41 @@ The sort of the repos can be changed and they can be filtered by group or tags`,
 			os.Exit(1)
 		}
 
-		fmt.Printf("Listing the repos of %s\n\n", termange.PaintText(config.Name, termange.Yellow))
-
 		sort.Slice(config.Repos, func(i, j int) bool {
 			return config.Repos[i].Name < config.Repos[j].Name
 		})
 
+		// The tag to filter the repos
+		tag, _ := cmd.Flags().GetString("tag")
+		finalRepoList := make([]core.Repo, 0)
+
 		for _, repo := range config.Repos {
-			fmt.Println("- " + repo.Name)
+			// If tag is provided and repo does not have that tag, we continue
+			if tag != "" && !slices.Contains(repo.Tags, tag) {
+				continue
+			}
+			finalRepoList = append(finalRepoList, repo)
+		}
+
+		fmt.Printf("Listing the repos of %s\n\n", termange.PaintText(config.Name, termange.Yellow))
+
+		fmt.Println(config.Name)
+		if tag != "" {
+			fmt.Printf("└── tag: %v\n", tag)
+		}
+		for i := 0; i < len(finalRepoList); i++ {
+			r := finalRepoList[i]
+			isLast := i == len(finalRepoList)-1
+
+			prefix := "├──"
+			if isLast {
+				prefix = "└──"
+			}
+			if tag != "" {
+				prefix = fmt.Sprintf("   %v", prefix)
+			}
+
+			fmt.Printf("%v %v\n", prefix, r.Name)
 		}
 	},
 }
@@ -51,4 +79,5 @@ func init() {
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
 	// listCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	listCmd.Flags().String("tag", "", "The tag to filter the repos")
 }
