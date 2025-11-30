@@ -24,7 +24,7 @@ The sort of the repos can be changed and they can be filtered by group or tags`,
 	Run: func(cmd *cobra.Command, args []string) {
 		config, configErr := core.ReadWorkspaceConfig()
 		if configErr != nil {
-			termange.PrintError(fmt.Sprintf("There was an error while reading the workspace yaml: %s", configErr.Error()))
+			termange.PrintErrorf("There was an error while reading the workspace yaml: %s\n", configErr.Error())
 			os.Exit(1)
 		}
 
@@ -44,7 +44,7 @@ The sort of the repos can be changed and they can be filtered by group or tags`,
 			finalRepoList = append(finalRepoList, repo)
 		}
 
-		fmt.Printf("Listing the repos of %s\n\n", termange.PaintText(config.Name, termange.Yellow))
+		fmt.Printf("Listing the repos of %s\n\n", termange.PaintText(config.Name, termange.ColorYellow))
 
 		fmt.Println(config.Name)
 		if tag != "" {

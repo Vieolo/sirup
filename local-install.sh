@@ -1,1 +1,0 @@
-go build -o $GOPATH/bin/sirup main.go

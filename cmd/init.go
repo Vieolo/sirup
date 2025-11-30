@@ -25,17 +25,17 @@ var initCmd = &cobra.Command{
 		fmt.Println("- Looking for an existing sirup.workspace.yaml")
 		con, conErr := core.ReadWorkspaceConfig()
 		if conErr != nil {
-			termange.PrintColorln("- No valid sirup.workspace.yaml was found! generating a new one...", termange.Yellow)
+			termange.PrintColorln(string(termange.ColorYellow), "- No valid sirup.workspace.yaml was found! generating a new one...")
 			con.Name = tui.TextInput(tui.TextInputOptions{Prompt: "What is the name of the workspace?"})
 		}
 
 		conWriteErr := core.WriteWorkspaceConfig(con)
 		if conWriteErr != nil {
-			termange.PrintError("- Error while writing the sirup.workspace.yaml file")
-			termange.PrintError(conWriteErr.Error())
+			termange.PrintErrorln("- Error while writing the sirup.workspace.yaml file")
+			termange.PrintErrorln(conWriteErr.Error())
 			return
 		} else {
-			termange.PrintSuccess("- Workspace config is generated")
+			termange.PrintSuccessln("- Workspace config is generated")
 		}
 
 		if !filange.FileExists(".gitignore") {
@@ -53,15 +53,15 @@ var initCmd = &cobra.Command{
 `
 			gitIgnoreWriteErr := os.WriteFile(".gitignore", []byte(gitIgnore), 0777)
 			if gitIgnoreWriteErr != nil {
-				termange.PrintError("- Error while writing the .gitignore file")
-				termange.PrintError(gitIgnoreWriteErr.Error())
+				termange.PrintErrorln("- Error while writing the .gitignore file")
+				termange.PrintErrorln(gitIgnoreWriteErr.Error())
 				return
 			} else {
-				termange.PrintSuccess("- Default .gitignore is generated")
+				termange.PrintSuccessln("- Default .gitignore is generated")
 			}
 		}
 
-		termange.PrintSuccess("- Basic workspace is initiated!")
+		termange.PrintSuccessln("- Basic workspace is initiated!")
 		fmt.Println("\n\nPossibel next steps:")
 		fmt.Println("\tTurn this project into a git repo")
 		fmt.Println("\tAdd your repos to the sirup.workspace.yaml file")

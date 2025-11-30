@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 	"github.com/vieolo/sirup/core"
 	"github.com/vieolo/termange"
@@ -16,22 +14,22 @@ var fetchCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		config, configErr := core.ReadWorkspaceConfig()
 		if configErr != nil {
-			termange.PrintError(configErr.Error())
+			termange.PrintErrorln(configErr.Error())
 			return
 		}
 
 		if len(config.Repos) == 0 {
-			termange.PrintError("Please add a repo to the list of repos in sirup.workspace.yaml")
+			termange.PrintErrorln("Please add a repo to the list of repos in sirup.workspace.yaml")
 			return
 		}
 
 		for _, singleRepo := range config.Repos {
-			termange.PrintColorln(fmt.Sprintf("- Cloning %v...", singleRepo.Name), termange.Yellow)
+			termange.PrintColorf(termange.ColorYellow, "- Cloning %v...", singleRepo.Name)
 			cloneErr := singleRepo.CloneFromGit()
 			if cloneErr == nil {
-				termange.PrintSuccess(fmt.Sprintf("- Successfully cloned %v", singleRepo.Name))
+				termange.PrintSuccessf("- Successfully cloned %v\n", singleRepo.Name)
 			} else {
-				termange.PrintError(fmt.Sprintf("- Failed to clone %v", singleRepo.Name))
+				termange.PrintErrorf("- Failed to clone %v\n", singleRepo.Name)
 			}
 		}
 	},
