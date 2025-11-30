@@ -1,0 +1,7 @@
+name: sirup
+description: Multi-repo workspace manager, the closest thing to a monorepo without being a monorepo
+version: 0.1.6
+license: MIT
+
+commands:
+  local-install: go build -o $GOPATH/bin/sirup main.go

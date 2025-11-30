@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.1.6 (2025-11-30)
+- Added `version` command to display the current version of `sirup` cli
+- Migrated the package to use `go.yaml`
+
 ## v0.1.5 (2025-11-24)
 - Improved the listing of the repos
 - Added support for filtering repos by tags
